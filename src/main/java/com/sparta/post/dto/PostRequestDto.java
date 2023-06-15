@@ -1,11 +1,10 @@
-package com.sparta.post.entity;
+package com.sparta.post.dto;
 
+import com.sparta.post.entity.Post;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
-public class Post {
+public class PostRequestDto {
     private String postName;
     private String userName;
     private String postContent;
