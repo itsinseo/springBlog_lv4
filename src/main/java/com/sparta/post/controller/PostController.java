@@ -18,7 +18,7 @@ public class PostController {
 
     @PostMapping("/post")
     public PostResponseDto createPost(@RequestBody PostRequestDto postRequestDto) {
-        return postService.createPost();
+        return postService.createPost(postRequestDto);
     }
 
     @GetMapping("/posts")

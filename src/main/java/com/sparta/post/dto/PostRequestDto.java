@@ -1,6 +1,5 @@
 package com.sparta.post.dto;
 
-import com.sparta.post.entity.Post;
 import lombok.Getter;
 
 @Getter
