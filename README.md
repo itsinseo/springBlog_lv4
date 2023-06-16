@@ -3,10 +3,8 @@
 # Spring 개인과제
 
 ### 🏁 Goal:  스프링 부트로 로그인 기능이 없는 나만의 블로그 백엔드 서버 만들기
-###
 
-
-## ✅ 서비스 완성 요구사항
+## 서비스 완성 요구사항
 
 1. 아래의 요구사항을 기반으로 Use Case 그려보기
     - 손으로 그려도 됩니다.
@@ -37,3 +35,5 @@
 | PUT    | /api/post/{id} | {<br/>"postName":"postName",<br/>"userName":"userName",<br/>"postContent":"postContent",<br/>"password":"password"<br/>} | {<br/>"id": 4,<br/>"postName": "제목",<br/>"userName": "작성자",<br/>"postContent": "더미2",<br/>"createdAt": "2023-06-16T13:18:43.820994",<br/>"modifiedAt": "2023-06-16T13:18:43.820994"<br/>}                                                                                                                                                                                                                            |
 | DELETE | /api/post/{id} | {<br/>"password":"password'<br/>}                                                                                        | {<br/>"success":true<br/>}                                                                                                                                                                                                                                                                                                                                                                                           |
 
+## 프로젝트 진행 중 발생했던 문제와 의문점
+https://coding1ki.tistory.com/80
