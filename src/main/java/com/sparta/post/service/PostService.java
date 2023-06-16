@@ -1,5 +1,7 @@
 package com.sparta.post.service;
 
+import com.sparta.post.dto.DeleteRequestDto;
+import com.sparta.post.dto.DeleteResponseDto;
 import com.sparta.post.dto.PostRequestDto;
 import com.sparta.post.dto.PostResponseDto;
 import com.sparta.post.entity.Post;
@@ -18,20 +20,14 @@ public class PostService {
     }
 
     public PostResponseDto createPost(PostRequestDto postRequestDto) {
-        // RequestDto -> Entity
         Post post = new Post(postRequestDto);
 
-        // Entity를 DB에 저장
         Post savePost = postRepository.save(post);
 
-        // Entity -> ResponseDto
-        PostResponseDto postResponseDto = new PostResponseDto(savePost);
-
-        return postResponseDto;
+        return new PostResponseDto(savePost);
     }
 
     public List<PostResponseDto> getPosts() {
-        // DB 조회
         return postRepository.findAllByOrderByCreatedAtDesc().stream().map(PostResponseDto::new).toList();
     }
 
@@ -44,23 +40,29 @@ public class PostService {
 
     @Transactional
     public PostResponseDto updatePost(Long id, PostRequestDto postRequestDto) {
-        Post post = findPost(id);
+        Post post = findPost(id, postRequestDto.getPassword());
 
         post.update(postRequestDto);
 
         return new PostResponseDto(post);
     }
 
-    public Long deletePost(Long id) {
-        Post post = findPost(id);
+    public DeleteResponseDto deletePost(Long id, DeleteRequestDto deleteRequestDto) {
+        Post post = findPost(id, deleteRequestDto.getPassword());
 
         postRepository.delete(post);
 
-        return id;
+        return new DeleteResponseDto();
     }
 
     private Post findPost(Long id) {
         return postRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("해당 ID의 게시글이 존재하지 않습니다.")
+        );
+    }
+
+    private Post findPost(Long id, String password) {
+        return postRepository.findByIdAndPassword(id, password).orElseThrow(() ->
                 new IllegalArgumentException("해당 ID의 게시글이 존재하지 않습니다.")
         );
     }

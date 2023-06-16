@@ -1,5 +1,7 @@
 package com.sparta.post.controller;
 
+import com.sparta.post.dto.DeleteRequestDto;
+import com.sparta.post.dto.DeleteResponseDto;
 import com.sparta.post.dto.PostRequestDto;
 import com.sparta.post.dto.PostResponseDto;
 import com.sparta.post.service.PostService;
@@ -37,7 +39,7 @@ public class PostController {
     }
 
     @DeleteMapping("/post/{id}")
-    public Long deletePost(@PathVariable Long id) {
-        return postService.deletePost(id);
+    public DeleteResponseDto deletePost(@PathVariable Long id, @RequestBody DeleteRequestDto deleteRequestDto) {
+        return postService.deletePost(id, deleteRequestDto);
     }
 }
