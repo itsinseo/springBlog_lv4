@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @Table(name = "post")
 @NoArgsConstructor
-public class Post {
+public class Post extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,10 +21,13 @@ public class Post {
     private String userName;
     @Column(name = "postContent", nullable = false)
     private String postContent;
+    @Column(name = "password", nullable = false)
+    private String password;
 
     public Post(PostRequestDto postRequestDto) {
         this.postName = postRequestDto.getPostName();
         this.userName = postRequestDto.getUserName();
         this.postContent = postRequestDto.getPostContent();
+        this.password = postRequestDto.getPassword();
     }
 }
