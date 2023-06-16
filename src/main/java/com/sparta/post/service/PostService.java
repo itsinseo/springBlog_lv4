@@ -37,14 +37,31 @@ public class PostService {
 
     @Transactional
     public PostResponseDto getPost(Long id) {
-        return null;
+        Post post = findPost(id);
+
+        return new PostResponseDto(post);
     }
 
+    @Transactional
     public PostResponseDto updatePost(Long id, PostRequestDto postRequestDto) {
-        return null;
+        Post post = findPost(id);
+
+        post.update(postRequestDto);
+
+        return new PostResponseDto(post);
     }
 
     public Long deletePost(Long id) {
-        return null;
+        Post post = findPost(id);
+
+        postRepository.delete(post);
+
+        return id;
+    }
+
+    private Post findPost(Long id) {
+        return postRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("해당 ID의 게시글이 존재하지 않습니다.")
+        );
     }
 }
