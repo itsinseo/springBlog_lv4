@@ -63,7 +63,7 @@ public class PostService {
 
     private Post findPost(Long id, String password) {
         return postRepository.findByIdAndPassword(id, password).orElseThrow(() ->
-                new IllegalArgumentException("해당 ID의 게시글이 존재하지 않습니다.")
+                new IllegalArgumentException("ID 혹은 비밀번호 오류입니다.")
         );
     }
 }
