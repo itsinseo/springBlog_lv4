@@ -5,6 +5,7 @@ import com.sparta.post.dto.PostResponseDto;
 import com.sparta.post.entity.Post;
 import com.sparta.post.repository.PostRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -32,5 +33,18 @@ public class PostService {
     public List<PostResponseDto> getPosts() {
         // DB 조회
         return postRepository.findAllByOrderByCreatedAtDesc().stream().map(PostResponseDto::new).toList();
+    }
+
+    @Transactional
+    public PostResponseDto getPost(Long id) {
+        return null;
+    }
+
+    public PostResponseDto updatePost(Long id, PostRequestDto postRequestDto) {
+        return null;
+    }
+
+    public Long deletePost(Long id) {
+        return null;
     }
 }
