@@ -26,6 +26,7 @@ public class PostResponseDto {
         this.modifiedAt = post.getModifiedAt();
     }
 
+    // DELETE API Response 용도의 생성자
     public PostResponseDto(Boolean success) {
         this.success = success;
     }
