@@ -1,7 +1,5 @@
 package com.sparta.post.service;
 
-import com.sparta.post.dto.DeleteRequestDto;
-import com.sparta.post.dto.DeleteResponseDto;
 import com.sparta.post.dto.PostRequestDto;
 import com.sparta.post.dto.PostResponseDto;
 import com.sparta.post.entity.Post;
@@ -31,7 +29,6 @@ public class PostService {
         return postRepository.findAllByOrderByCreatedAtDesc().stream().map(PostResponseDto::new).toList();
     }
 
-    @Transactional
     public PostResponseDto getPost(Long id) {
         Post post = findPost(id);
 
@@ -47,12 +44,12 @@ public class PostService {
         return new PostResponseDto(post);
     }
 
-    public DeleteResponseDto deletePost(Long id, DeleteRequestDto deleteRequestDto) {
-        Post post = findPost(id, deleteRequestDto.getPassword());
+    public PostResponseDto deletePost(Long id, PostRequestDto postRequestDto) {
+        Post post = findPost(id, postRequestDto.getPassword());
 
         postRepository.delete(post);
 
-        return new DeleteResponseDto();
+        return new PostResponseDto(true);
     }
 
     private Post findPost(Long id) {
