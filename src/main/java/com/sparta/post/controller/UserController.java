@@ -5,6 +5,7 @@ import com.sparta.post.dto.LoginResponseDto;
 import com.sparta.post.dto.SignupRequestDto;
 import com.sparta.post.dto.SignupResponseDto;
 import com.sparta.post.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,7 @@ public class UserController {
 
     // 회원가입 API
     @PostMapping("/user/signup")
-    public SignupResponseDto signup(@RequestBody SignupRequestDto signupRequestDto) {
+    public SignupResponseDto signup(@RequestBody @Valid SignupRequestDto signupRequestDto) {
         return userService.signup(signupRequestDto);
     }
 
