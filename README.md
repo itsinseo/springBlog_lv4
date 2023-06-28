@@ -49,6 +49,7 @@
 ## API 명세서
 
 ![01.png](..%2F..%2F..%2F..%2F..%2F01.png)
+https://glamorous-gram-4a2.notion.site/a19866b5e8d14465823e86c851b88be4?v=b89afabea1184c31bd97be642c95ef1e
 
 ## ERD
 ![ERD.PNG](..%2F..%2F..%2F..%2F..%2FERD.PNG)
