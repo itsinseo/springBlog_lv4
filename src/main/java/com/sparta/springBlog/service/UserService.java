@@ -1,10 +1,7 @@
 package com.sparta.springBlog.service;
 
 import com.sparta.springBlog.Jwt.JwtUtil;
-import com.sparta.springBlog.dto.LoginRequestDto;
-import com.sparta.springBlog.dto.LoginResponseDto;
-import com.sparta.springBlog.dto.SignupRequestDto;
-import com.sparta.springBlog.dto.SignupResponseDto;
+import com.sparta.springBlog.dto.*;
 import com.sparta.springBlog.entity.User;
 import com.sparta.springBlog.entity.UserRoleEnum;
 import com.sparta.springBlog.repository.UserRepository;
@@ -24,7 +21,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    public SignupResponseDto signup(SignupRequestDto signupRequestDto) {
+    public ApiResponseDto signup(SignupRequestDto signupRequestDto) {
         String username = signupRequestDto.getUsername();
 
         // username 중복 확인
@@ -38,10 +35,10 @@ public class UserService {
         User user = new User(username, password, role);
         userRepository.save(user);
 
-        return new SignupResponseDto("회원가입 성공", HttpStatus.OK.value());
+        return new ApiResponseDto("회원가입 성공", HttpStatus.OK.value());
     }
 
-    public LoginResponseDto login(LoginRequestDto loginRequestDto, HttpServletResponse res) {
+    public ApiResponseDto login(LoginRequestDto loginRequestDto, HttpServletResponse res) {
         String username = loginRequestDto.getUsername();
         String password = loginRequestDto.getPassword();
 
@@ -60,6 +57,6 @@ public class UserService {
 
         jwtUtil.addJwtToCookie(token, res);
 
-        return new LoginResponseDto("로그인 성공", HttpStatus.OK.value());
+        return new ApiResponseDto("로그인 성공", HttpStatus.OK.value());
     }
 }

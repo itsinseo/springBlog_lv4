@@ -1,9 +1,6 @@
 package com.sparta.springBlog.controller;
 
-import com.sparta.springBlog.dto.LoginRequestDto;
-import com.sparta.springBlog.dto.LoginResponseDto;
-import com.sparta.springBlog.dto.SignupRequestDto;
-import com.sparta.springBlog.dto.SignupResponseDto;
+import com.sparta.springBlog.dto.*;
 import com.sparta.springBlog.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -30,14 +27,14 @@ public class UserController {
 
     // 회원가입 API
     @PostMapping("/user/signup")
-    public SignupResponseDto signup(@RequestBody @Valid SignupRequestDto signupRequestDto, BindingResult bindingResult) {
+    public ApiResponseDto signup(@RequestBody @Valid SignupRequestDto signupRequestDto, BindingResult bindingResult) {
         // Validation 예외처리
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
         if (fieldErrors.size() > 0) {
             for (FieldError fieldError : fieldErrors) {
                 log.error(fieldError.getField() + " 필드 : " + fieldError.getDefaultMessage());
             }
-            return new SignupResponseDto("회원 가입 실패", HttpStatus.BAD_REQUEST.value());
+            return new ApiResponseDto("회원 가입 실패", HttpStatus.BAD_REQUEST.value());
         }
 
         return userService.signup(signupRequestDto);
@@ -45,7 +42,7 @@ public class UserController {
 
     // 로그인 API
     @PostMapping("/user/login")
-    public LoginResponseDto login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse res) {
+    public ApiResponseDto login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse res) {
         return userService.login(loginRequestDto, res);
     }
 }

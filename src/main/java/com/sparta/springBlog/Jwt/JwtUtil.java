@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.CookieValue;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -27,7 +28,7 @@ public class JwtUtil {
     // Token 식별자
     public static final String BEARER_PREFIX = "Bearer ";
     // 토큰 만료시간
-    private final long TOKEN_TIME = 30 * 60 * 1000L; // 30분
+    private final long TOKEN_TIME = 120 * 60 * 1000L; // 120분
 
     @Value("${jwt.secret.key}") // Base64 Encoded SecretKey
     private String secretKey;
@@ -58,7 +59,7 @@ public class JwtUtil {
         try {
             token = URLEncoder.encode(token, "utf-8").replaceAll("\\+", "%20"); // 공백(" ")을 전부 %20으로 교체
             Cookie cookie = new Cookie(AUTHORIZATION_HEADER, token);
-            cookie.setPath("/");
+            cookie.setPath("/"); // 모든 경로에서 사용
 
             // Response 객체에 Cookie 추가
             res.addCookie(cookie);
@@ -74,7 +75,6 @@ public class JwtUtil {
             return token.substring(7); // BEARER_PREFIX 의 길이만큼 substring
         }
 
-        log.info("Not Found Token");
         throw new NullPointerException("Not Found Token");
     }
 
@@ -95,15 +95,26 @@ public class JwtUtil {
         return false;
     }
 
-    public void doubleCheckToken(String data) {
-        data = substringToken(data);
-        if (!validateToken(data)) {
-            throw new RuntimeException("Invalid token");
+    public void checkTokenFromCookie(String cookie) {
+        String token = substringToken(cookie);
+        if (!validateToken(token)) {
+            throw new RuntimeException("Invalid token: 토큰이 유효하지 않습니다.");
         }
     }
 
     // 토큰에서 사용자 정보 가져오기
     public Claims getUserInfoFromToken(String token) {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+    }
+
+    // 토큰에서 username 가져오기
+    public String getUsernameFromCookie(@CookieValue(value = JwtUtil.AUTHORIZATION_HEADER) String cookie) {
+        // String token 을 총 두 번 생성하게 되지만, 일단은 로직이 안전한지 검사하기 위해 놔둠
+        checkTokenFromCookie(cookie);
+
+        String token = substringToken(cookie);
+        Claims claims = getUserInfoFromToken(token);
+        System.out.println("claims.getSubject() = " + claims.getSubject());
+        return claims.getSubject();
     }
 }
