@@ -1,8 +1,8 @@
-package com.sparta.post.controller;
+package com.sparta.springBlog.controller;
 
-import com.sparta.post.dto.PostRequestDto;
-import com.sparta.post.dto.PostResponseDto;
-import com.sparta.post.service.PostService;
+import com.sparta.springBlog.dto.PostRequestDto;
+import com.sparta.springBlog.dto.PostResponseDto;
+import com.sparta.springBlog.service.PostService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

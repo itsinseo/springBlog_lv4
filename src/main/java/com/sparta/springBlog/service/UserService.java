@@ -1,13 +1,13 @@
-package com.sparta.post.service;
+package com.sparta.springBlog.service;
 
-import com.sparta.post.Jwt.JwtUtil;
-import com.sparta.post.dto.LoginRequestDto;
-import com.sparta.post.dto.LoginResponseDto;
-import com.sparta.post.dto.SignupRequestDto;
-import com.sparta.post.dto.SignupResponseDto;
-import com.sparta.post.entity.User;
-import com.sparta.post.entity.UserRoleEnum;
-import com.sparta.post.repository.UserRepository;
+import com.sparta.springBlog.Jwt.JwtUtil;
+import com.sparta.springBlog.dto.LoginRequestDto;
+import com.sparta.springBlog.dto.LoginResponseDto;
+import com.sparta.springBlog.dto.SignupRequestDto;
+import com.sparta.springBlog.dto.SignupResponseDto;
+import com.sparta.springBlog.entity.User;
+import com.sparta.springBlog.entity.UserRoleEnum;
+import com.sparta.springBlog.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

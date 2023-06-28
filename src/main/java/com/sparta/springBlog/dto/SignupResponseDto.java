@@ -1,15 +1,13 @@
-package com.sparta.post.dto;
+package com.sparta.springBlog.dto;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
-public class LoginResponseDto {
+public class SignupResponseDto {
     private final String message;
     private final Integer statusCode;
 
-    public LoginResponseDto(String message, Integer statusCode) {
+    public SignupResponseDto(String message, Integer statusCode) {
         this.message = message;
         this.statusCode = statusCode;
     }

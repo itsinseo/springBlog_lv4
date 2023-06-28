@@ -1,4 +1,4 @@
-package com.sparta.post.entity;
+package com.sparta.springBlog.entity;
 
 public enum UserRoleEnum {
     USER(Authority.USER), ADMIN(Authority.ADMIN);

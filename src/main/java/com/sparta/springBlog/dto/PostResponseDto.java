@@ -1,7 +1,7 @@
-package com.sparta.post.dto;
+package com.sparta.springBlog.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.sparta.post.entity.Post;
+import com.sparta.springBlog.entity.Post;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

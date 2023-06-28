@@ -1,9 +1,9 @@
-package com.sparta.post.service;
+package com.sparta.springBlog.service;
 
-import com.sparta.post.dto.PostRequestDto;
-import com.sparta.post.dto.PostResponseDto;
-import com.sparta.post.entity.Post;
-import com.sparta.post.repository.PostRepository;
+import com.sparta.springBlog.dto.PostRequestDto;
+import com.sparta.springBlog.dto.PostResponseDto;
+import com.sparta.springBlog.entity.Post;
+import com.sparta.springBlog.repository.PostRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,6 +1,6 @@
-package com.sparta.post.repository;
+package com.sparta.springBlog.repository;
 
-import com.sparta.post.entity.User;
+import com.sparta.springBlog.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

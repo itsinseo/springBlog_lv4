@@ -1,10 +1,10 @@
-package com.sparta.post.controller;
+package com.sparta.springBlog.controller;
 
-import com.sparta.post.dto.LoginRequestDto;
-import com.sparta.post.dto.LoginResponseDto;
-import com.sparta.post.dto.SignupRequestDto;
-import com.sparta.post.dto.SignupResponseDto;
-import com.sparta.post.service.UserService;
+import com.sparta.springBlog.dto.LoginRequestDto;
+import com.sparta.springBlog.dto.LoginResponseDto;
+import com.sparta.springBlog.dto.SignupRequestDto;
+import com.sparta.springBlog.dto.SignupResponseDto;
+import com.sparta.springBlog.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
