@@ -48,11 +48,12 @@
 
 ## API 명세서
 
-![01.png](..%2F..%2F..%2F..%2F..%2F01.png)
+![01](https://github.com/itsinseo/springBlog_lv2/assets/87530331/cfc8465f-e5a0-4720-97c1-0bf2455f771f)
 https://glamorous-gram-4a2.notion.site/a19866b5e8d14465823e86c851b88be4?v=b89afabea1184c31bd97be642c95ef1e
 
 ## ERD
-![ERD.PNG](..%2F..%2F..%2F..%2F..%2FERD.PNG)
+
+![ERD](https://github.com/itsinseo/springBlog_lv2/assets/87530331/26247d04-60f4-4c49-9bfd-29f7a6d839b7)
 
 ## 프로젝트 진행 중 발생했던 문제와 의문점
 
