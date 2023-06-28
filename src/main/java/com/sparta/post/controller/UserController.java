@@ -5,6 +5,7 @@ import com.sparta.post.dto.LoginResponseDto;
 import com.sparta.post.dto.SignupRequestDto;
 import com.sparta.post.dto.SignupResponseDto;
 import com.sparta.post.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -44,9 +45,7 @@ public class UserController {
 
     // 로그인 API
     @PostMapping("/user/login")
-    public LoginResponseDto login(@RequestBody LoginRequestDto loginRequestDto) {
-        return userService.login(loginRequestDto);
+    public LoginResponseDto login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse res) {
+        return userService.login(loginRequestDto, res);
     }
-
-
 }
