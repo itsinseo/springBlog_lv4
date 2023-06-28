@@ -1,4 +1,4 @@
-![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=300&section=header&text=Post%20프로젝트&fontSize=70)
+![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=300&section=header&text=블로그%20서버%20만들기&fontSize=70)
 
 # Spring 개인과제
 
