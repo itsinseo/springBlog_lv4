@@ -73,7 +73,7 @@
 
 ## ERD
 
-
+![lv3](https://github.com/itsinseo/springBlog_lv3_incomplete/assets/87530331/7d3363df-5dd0-4347-94c5-936e2534a4d8)
 
 ## Why?
 Q1. 처음 설계한 API 명세서에 변경사항이 있었나요?
