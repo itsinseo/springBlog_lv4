@@ -7,10 +7,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @EnableJpaAuditing
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
-public class PostApplication {
+public class SpringBlogApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PostApplication.class, args);
+        SpringApplication.run(SpringBlogApplication.class, args);
     }
 
 }
