@@ -1,8 +1,8 @@
 package com.sparta.springBlog.service;
 
+import com.sparta.springBlog.dto.ApiResponseDto;
 import com.sparta.springBlog.dto.PostRequestDto;
 import com.sparta.springBlog.dto.PostResponseDto;
-import com.sparta.springBlog.dto.ApiResponseDto;
 import com.sparta.springBlog.entity.Post;
 import com.sparta.springBlog.entity.User;
 import com.sparta.springBlog.repository.PostRepository;
@@ -20,11 +20,10 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
-    public PostResponseDto createPost(PostRequestDto postRequestDto, String userName) {
-        Post post = new Post(postRequestDto, userName);
-        User user = userRepository.findByUsername(userName).orElseThrow(() ->
-                new IllegalArgumentException("userName이 잘못되었습니다.") // 로직 상 userName 은 이미 검증이 된 상태이기에 예외가 발생하는 경우는 없다
-        );
+    public PostResponseDto createPost(PostRequestDto postRequestDto, User user) {
+        Post post = new Post(postRequestDto, user.getUsername());
+        System.out.println(post);
+
         post.setUser(user);
 
         Post savePost = postRepository.save(post);
@@ -43,21 +42,25 @@ public class PostService {
     }
 
     @Transactional
-    public PostResponseDto updatePost(Long id, PostRequestDto postRequestDto, String userName) {
+    public PostResponseDto updatePost(Long id, PostRequestDto postRequestDto, User user) {
         Post post = findPost(id);
-        if (!post.getUserName().equals(userName)) {
-            throw new IllegalArgumentException("userName이 일치하지 않습니다.");
+        // 현재 로그인 된 user 와 게시글 작성자가 동일한지 확인
+        if (!post.getUser().equals(user)) {
+            throw new IllegalArgumentException("user가 일치하지 않습니다.");
         }
+
         post.setPostName(postRequestDto.getPostName());
         post.setPostContent(postRequestDto.getPostContent());
         return new PostResponseDto(post);
     }
 
-    public ApiResponseDto deletePost(Long id, String userName) {
+    public ApiResponseDto deletePost(Long id, User user) {
         Post post = findPost(id);
-        if (!post.getUserName().equals(userName)) {
-            throw new IllegalArgumentException("userName이 일치하지 않습니다.");
+        // 현재 로그인 된 user 와 게시글 작성자가 동일한지 확인
+        if (!post.getUser().equals(user)) {
+            throw new IllegalArgumentException("user가 일치하지 않습니다.");
         }
+
         postRepository.delete(post);
         return new ApiResponseDto("게시글 삭제 성공", HttpStatus.OK.value());
     }

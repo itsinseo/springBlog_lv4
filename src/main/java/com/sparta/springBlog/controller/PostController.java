@@ -1,11 +1,13 @@
 package com.sparta.springBlog.controller;
 
 import com.sparta.springBlog.Jwt.JwtUtil;
+import com.sparta.springBlog.dto.ApiResponseDto;
 import com.sparta.springBlog.dto.PostRequestDto;
 import com.sparta.springBlog.dto.PostResponseDto;
-import com.sparta.springBlog.dto.ApiResponseDto;
+import com.sparta.springBlog.security.UserDetailsImpl;
 import com.sparta.springBlog.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,10 +21,8 @@ public class PostController {
 
     // 게시글 작성
     @PostMapping("/posts")
-    public PostResponseDto createPost(@CookieValue(value = JwtUtil.AUTHORIZATION_HEADER) String cookie, @RequestBody PostRequestDto postRequestDto) {
-        String userName = checkCookieAndGetUsername(cookie);
-
-        return postService.createPost(postRequestDto, userName);
+    public PostResponseDto createPost(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody PostRequestDto postRequestDto) {
+        return postService.createPost(postRequestDto, userDetails.getUser());
     }
 
     // 게시글 모두 불러오기
@@ -39,22 +39,18 @@ public class PostController {
 
     // id 로 특정 게시글 수정하기
     @PutMapping("/posts/{id}")
-    public PostResponseDto updatePost(@CookieValue(value = JwtUtil.AUTHORIZATION_HEADER) String cookie, @PathVariable Long id, @RequestBody PostRequestDto postRequestDto) {
-        String userName = checkCookieAndGetUsername(cookie);
-
-        return postService.updatePost(id, postRequestDto, userName);
+    public PostResponseDto updatePost(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id, @RequestBody PostRequestDto postRequestDto) {
+        return postService.updatePost(id, postRequestDto, userDetails.getUser());
     }
 
     // id로 특정 게시글 삭제하기
     @DeleteMapping("/posts/{id}")
-    public ApiResponseDto deletePost(@CookieValue(value = JwtUtil.AUTHORIZATION_HEADER) String cookie, @PathVariable Long id) {
-        String userName = checkCookieAndGetUsername(cookie);
-
-        return postService.deletePost(id, userName);
+    public ApiResponseDto deletePost(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
+        return postService.deletePost(id, userDetails.getUser());
     }
 
     // 쿠키 검사, 완료시 username 을 가져오기 위한 코드
-    public String checkCookieAndGetUsername(String cookie) {
-        return jwtUtil.getUsernameFromCookie(cookie);
-    }
+//    public String checkCookieAndGetUsername(String cookie) {
+//        return jwtUtil.getUsernameFromCookie(cookie);
+//    }
 }

@@ -1,6 +1,7 @@
 package com.sparta.springBlog.entity;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "users")
+@EqualsAndHashCode
 @NoArgsConstructor
 public class User {
 

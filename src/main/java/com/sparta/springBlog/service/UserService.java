@@ -55,7 +55,7 @@ public class UserService {
         // JWT 생성
         String token = jwtUtil.createToken(user.getUsername(), user.getRole());
 
-        jwtUtil.addJwtToCookie(token, res);
+        res.addHeader(JwtUtil.AUTHORIZATION_HEADER, token);
 
         return new ApiResponseDto("로그인 성공", HttpStatus.OK.value());
     }
