@@ -21,7 +21,8 @@ public class PostController {
 
     // 게시글 작성
     @PostMapping("/posts")
-    public PostResponseDto createPost(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody PostRequestDto postRequestDto) {
+    public PostResponseDto createPost(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                      @RequestBody PostRequestDto postRequestDto) {
         return postService.createPost(postRequestDto, userDetails.getUser());
     }
 
@@ -39,18 +40,16 @@ public class PostController {
 
     // id 로 특정 게시글 수정하기
     @PutMapping("/posts/{id}")
-    public PostResponseDto updatePost(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id, @RequestBody PostRequestDto postRequestDto) {
+    public PostResponseDto updatePost(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                      @PathVariable Long id,
+                                      @RequestBody PostRequestDto postRequestDto) {
         return postService.updatePost(id, postRequestDto, userDetails.getUser());
     }
 
     // id로 특정 게시글 삭제하기
     @DeleteMapping("/posts/{id}")
-    public ApiResponseDto deletePost(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
+    public ApiResponseDto deletePost(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                     @PathVariable Long id) {
         return postService.deletePost(id, userDetails.getUser());
     }
-
-    // 쿠키 검사, 완료시 username 을 가져오기 위한 코드
-//    public String checkCookieAndGetUsername(String cookie) {
-//        return jwtUtil.getUsernameFromCookie(cookie);
-//    }
 }

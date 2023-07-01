@@ -15,12 +15,16 @@ public class Post extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "postName", nullable = false)
     private String postName;
+
     @Column(name = "userName", nullable = false)
     private String userName;
+
     @Column(name = "postContent", nullable = false)
     private String postContent;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
