@@ -1,5 +1,6 @@
 package com.sparta.springBlog.controller;
 
+import com.sparta.springBlog.dto.ApiResponseDto;
 import com.sparta.springBlog.dto.CommentRequestDto;
 import com.sparta.springBlog.dto.CommentResponseDto;
 import com.sparta.springBlog.security.UserDetailsImpl;
@@ -24,20 +25,17 @@ public class CommentController {
     }
 
     // 게시글의 댓글 수정
-    @PutMapping("/posts/{postId}/comments/{commentId}")
-    public CommentResponseDto updateComment(@PathVariable Long postId,
-                                            @PathVariable Long commentId,
+    @PutMapping("/comments/{commentId}")
+    public CommentResponseDto updateComment(@PathVariable Long commentId,
                                             @RequestBody CommentRequestDto commentRequestDto,
                                             @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return commentService.updateComment(postId, commentId, commentRequestDto, userDetails.getUser());
+        return commentService.updateComment(commentId, commentRequestDto, userDetails.getUser());
     }
 
     // 게시글의 댓글 삭제
-    @DeleteMapping("/posts/{postId}/comments/{commentId}")
-    public CommentResponseDto deleteComment(@PathVariable Long postId,
-                                            @PathVariable Long commentId,
-                                            @RequestBody CommentRequestDto commentRequestDto,
-                                            @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return null;
+    @DeleteMapping("/comments/{commentId}")
+    public ApiResponseDto deleteComment(@PathVariable Long commentId,
+                                        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return commentService.deleteComment(commentId, userDetails.getUser());
     }
 }

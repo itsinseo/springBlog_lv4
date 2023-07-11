@@ -1,5 +1,6 @@
 package com.sparta.springBlog.service;
 
+import com.sparta.springBlog.dto.ApiResponseDto;
 import com.sparta.springBlog.dto.CommentRequestDto;
 import com.sparta.springBlog.dto.CommentResponseDto;
 import com.sparta.springBlog.entity.Comment;
@@ -8,6 +9,7 @@ import com.sparta.springBlog.entity.User;
 import com.sparta.springBlog.repository.CommentRepository;
 import com.sparta.springBlog.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,13 +29,19 @@ public class CommentService {
     }
 
     @Transactional
-    public CommentResponseDto updateComment(Long postId, Long commentId, CommentRequestDto commentRequestDto, User user) {
-        Post post = findPost(postId);
-        Comment comment = findComment(commentId, user);
+    public CommentResponseDto updateComment(Long commentId, CommentRequestDto commentRequestDto, User user) {
+        Comment comment = findCommentForEditing(commentId, user);
         comment.setCommentContent(commentRequestDto.getCommentContent());
         commentRepository.save(comment);
 
         return new CommentResponseDto(comment);
+    }
+
+    public ApiResponseDto deleteComment(Long commentId, User user) {
+        Comment comment = findCommentForEditing(commentId, user);
+        commentRepository.delete(comment);
+
+        return new ApiResponseDto("댓글 삭제 성공", HttpStatus.OK.value());
     }
 
     public Post findPost(Long postId) {
@@ -42,7 +50,7 @@ public class CommentService {
         );
     }
 
-    public Comment findComment(Long commentId, User user) {
+    public Comment findCommentForEditing(Long commentId, User user) {
         // 댓글 존재 여부 확인
         Comment comment = commentRepository.findById(commentId).orElseThrow(() ->
                 new NullPointerException("해당 댓글이 존재하지 않습니다.")
