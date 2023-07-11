@@ -18,11 +18,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
-    private final UserRepository userRepository;
 
     public PostResponseDto createPost(PostRequestDto postRequestDto, User user) {
-        Post post = new Post(postRequestDto, user.getUsername());
-        System.out.println(post);
+        Post post = new Post(postRequestDto);
 
         post.setUser(user);
 
@@ -46,7 +44,7 @@ public class PostService {
         Post post = findPost(id);
         // 현재 로그인 된 user 와 게시글 작성자가 동일한지 확인
         if (!post.getUser().equals(user)) {
-            throw new IllegalArgumentException("user가 일치하지 않습니다.");
+            throw new IllegalArgumentException("게시글의 작성자가 아닙니다. 수정 권한이 없습니다.");
         }
 
         post.setPostName(postRequestDto.getPostName());
@@ -58,7 +56,7 @@ public class PostService {
         Post post = findPost(id);
         // 현재 로그인 된 user 와 게시글 작성자가 동일한지 확인
         if (!post.getUser().equals(user)) {
-            throw new IllegalArgumentException("user가 일치하지 않습니다.");
+            throw new IllegalArgumentException("게시글의 작성자가 아닙니다. 수정 권한이 없습니다.");
         }
 
         postRepository.delete(post);

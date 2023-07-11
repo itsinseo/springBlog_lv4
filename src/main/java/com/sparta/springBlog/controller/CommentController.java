@@ -29,7 +29,7 @@ public class CommentController {
                                             @PathVariable Long commentId,
                                             @RequestBody CommentRequestDto commentRequestDto,
                                             @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return null;
+        return commentService.updateComment(postId, commentId, commentRequestDto, userDetails.getUser());
     }
 
     // 게시글의 댓글 삭제

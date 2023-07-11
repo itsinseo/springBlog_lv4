@@ -1,15 +1,11 @@
 package com.sparta.springBlog.entity;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Getter
-@Setter
-@EqualsAndHashCode
 @Table(name = "comments")
 @NoArgsConstructor
 public class Comment extends Timestamped {
@@ -35,5 +31,9 @@ public class Comment extends Timestamped {
         this.commentContent = commentContent;
         this.post = post;
         this.user = user;
+    }
+
+    public void setCommentContent(String commentContent) {
+        this.commentContent = commentContent;
     }
 }
