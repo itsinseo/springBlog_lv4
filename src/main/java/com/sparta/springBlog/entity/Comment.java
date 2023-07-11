@@ -12,7 +12,7 @@ import lombok.Setter;
 @EqualsAndHashCode
 @Table(name = "comments")
 @NoArgsConstructor
-public class Comment extends Timestamped{
+public class Comment extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,8 +30,8 @@ public class Comment extends Timestamped{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-    
-    public Comment(String commentContent, Post post, User user) {
+
+    public Comment(Post post, String commentContent, User user) {
         this.commentContent = commentContent;
         this.post = post;
         this.user = user;

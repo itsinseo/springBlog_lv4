@@ -21,8 +21,8 @@ public class PostController {
 
     // 게시글 작성
     @PostMapping("/posts")
-    public PostResponseDto createPost(@AuthenticationPrincipal UserDetailsImpl userDetails,
-                                      @RequestBody PostRequestDto postRequestDto) {
+    public PostResponseDto createPost(@RequestBody PostRequestDto postRequestDto,
+                                      @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return postService.createPost(postRequestDto, userDetails.getUser());
     }
 
@@ -40,16 +40,16 @@ public class PostController {
 
     // id 로 특정 게시글 수정하기
     @PutMapping("/posts/{id}")
-    public PostResponseDto updatePost(@AuthenticationPrincipal UserDetailsImpl userDetails,
-                                      @PathVariable Long id,
-                                      @RequestBody PostRequestDto postRequestDto) {
+    public PostResponseDto updatePost(@PathVariable Long id,
+                                      @RequestBody PostRequestDto postRequestDto,
+                                      @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return postService.updatePost(id, postRequestDto, userDetails.getUser());
     }
 
     // id로 특정 게시글 삭제하기
     @DeleteMapping("/posts/{id}")
-    public ApiResponseDto deletePost(@AuthenticationPrincipal UserDetailsImpl userDetails,
-                                     @PathVariable Long id) {
+    public ApiResponseDto deletePost(@PathVariable Long id,
+                                     @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return postService.deletePost(id, userDetails.getUser());
     }
 }
