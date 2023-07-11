@@ -6,6 +6,7 @@ import com.sparta.springBlog.dto.CommentResponseDto;
 import com.sparta.springBlog.entity.Comment;
 import com.sparta.springBlog.entity.Post;
 import com.sparta.springBlog.entity.User;
+import com.sparta.springBlog.entity.UserRoleEnum;
 import com.sparta.springBlog.repository.CommentRepository;
 import com.sparta.springBlog.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -55,8 +56,10 @@ public class CommentService {
         Comment comment = commentRepository.findById(commentId).orElseThrow(() ->
                 new NullPointerException("해당 댓글이 존재하지 않습니다.")
         );
-        // 댓글 작성자 일치 여부 확인
-        if (comment.getUser().equals(user)) {
+        // 댓글 작성자 일치 또는 관리자인지 여부 확인
+        if (comment.getUser().equals(user)
+                || user.getRole().equals(UserRoleEnum.ADMIN)
+        ) {
             return comment;
         } else {
             throw new IllegalArgumentException("댓글의 작성자가 아닙니다. 수정 권한이 없습니다.");

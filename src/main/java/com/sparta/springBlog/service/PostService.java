@@ -5,8 +5,8 @@ import com.sparta.springBlog.dto.PostRequestDto;
 import com.sparta.springBlog.dto.PostResponseDto;
 import com.sparta.springBlog.entity.Post;
 import com.sparta.springBlog.entity.User;
+import com.sparta.springBlog.entity.UserRoleEnum;
 import com.sparta.springBlog.repository.PostRepository;
-import com.sparta.springBlog.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class PostService {
     private final PostRepository postRepository;
 
     public PostResponseDto createPost(PostRequestDto postRequestDto, User user) {
-        Post post = new Post(postRequestDto);
+        Post post = new Post(postRequestDto, user.getUsername());
 
         post.setUser(user);
 
@@ -42,8 +42,10 @@ public class PostService {
     @Transactional
     public PostResponseDto updatePost(Long id, PostRequestDto postRequestDto, User user) {
         Post post = findPost(id);
-        // 현재 로그인 된 user 와 게시글 작성자가 동일한지 확인
-        if (!post.getUser().equals(user)) {
+        // 현재 로그인 된 user 와 게시글 작성자가 동일한지 또는 관리자인지
+        if (!(post.getUser().equals(user)
+                || user.getRole().equals(UserRoleEnum.ADMIN))
+        ) {
             throw new IllegalArgumentException("게시글의 작성자가 아닙니다. 수정 권한이 없습니다.");
         }
 
@@ -54,8 +56,10 @@ public class PostService {
 
     public ApiResponseDto deletePost(Long id, User user) {
         Post post = findPost(id);
-        // 현재 로그인 된 user 와 게시글 작성자가 동일한지 확인
-        if (!post.getUser().equals(user)) {
+        // 현재 로그인 된 user 와 게시글 작성자가 동일한지 또는 관리자인지
+        if (!(post.getUser().equals(user)
+                || user.getRole().equals(UserRoleEnum.ADMIN))
+        ) {
             throw new IllegalArgumentException("게시글의 작성자가 아닙니다. 수정 권한이 없습니다.");
         }
 
