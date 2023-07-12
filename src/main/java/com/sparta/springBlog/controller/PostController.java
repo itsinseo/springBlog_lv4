@@ -1,12 +1,13 @@
 package com.sparta.springBlog.controller;
 
-import com.sparta.springBlog.Jwt.JwtUtil;
 import com.sparta.springBlog.dto.ApiResponseDto;
 import com.sparta.springBlog.dto.PostRequestDto;
 import com.sparta.springBlog.dto.PostResponseDto;
 import com.sparta.springBlog.security.UserDetailsImpl;
 import com.sparta.springBlog.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,39 +18,48 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
-    private final JwtUtil jwtUtil; // 게시글 작성, 수정, 삭제 요청 시 토큰 검사에 사용
 
     // 게시글 작성
     @PostMapping("/posts")
-    public PostResponseDto createPost(@RequestBody PostRequestDto postRequestDto,
-                                      @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return postService.createPost(postRequestDto, userDetails.getUser());
+    public ResponseEntity<PostResponseDto> createPost(@RequestBody PostRequestDto postRequestDto,
+                                                      @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        PostResponseDto postResponseDto = postService.createPost(postRequestDto, userDetails.getUser());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(postResponseDto);
     }
 
     // 게시글 모두 불러오기
     @GetMapping("/posts")
-    public List<PostResponseDto> getPosts() {
-        return postService.getPosts();
+    public ResponseEntity<List<PostResponseDto>> getPosts() {
+        List<PostResponseDto> postResponseDtoList = postService.getPosts();
+
+        return ResponseEntity.status(HttpStatus.OK).body(postResponseDtoList);
     }
 
     // id로 특정 게시글 불러오기
     @GetMapping("/posts/{id}")
-    public PostResponseDto getPost(@PathVariable Long id) {
-        return postService.getPost(id);
+    public ResponseEntity<PostResponseDto> getPost(@PathVariable Long id) {
+        PostResponseDto postResponseDto = postService.getPost(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(postResponseDto);
     }
 
     // id 로 특정 게시글 수정하기
     @PutMapping("/posts/{id}")
-    public PostResponseDto updatePost(@PathVariable Long id,
-                                      @RequestBody PostRequestDto postRequestDto,
-                                      @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return postService.updatePost(id, postRequestDto, userDetails.getUser());
+    public ResponseEntity<PostResponseDto> updatePost(@PathVariable Long id,
+                                                      @RequestBody PostRequestDto postRequestDto,
+                                                      @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        PostResponseDto postResponseDto = postService.updatePost(id, postRequestDto, userDetails.getUser());
+
+        return ResponseEntity.status(HttpStatus.OK).body(postResponseDto);
     }
 
     // id로 특정 게시글 삭제하기
     @DeleteMapping("/posts/{id}")
-    public ApiResponseDto deletePost(@PathVariable Long id,
-                                     @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return postService.deletePost(id, userDetails.getUser());
+    public ResponseEntity<ApiResponseDto> deletePost(@PathVariable Long id,
+                                                     @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        ApiResponseDto apiResponseDto = postService.deletePost(id, userDetails.getUser());
+
+        return ResponseEntity.status(HttpStatus.OK).body(apiResponseDto);
     }
 }
