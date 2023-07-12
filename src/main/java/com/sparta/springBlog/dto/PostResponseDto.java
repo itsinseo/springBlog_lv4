@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class PostResponseDto {
+public class PostResponseDto extends ApiResponseDto{
     private final Long id;
     private final String postName;
     private final String userName;

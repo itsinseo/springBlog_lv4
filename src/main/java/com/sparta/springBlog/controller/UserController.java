@@ -42,6 +42,10 @@ public class UserController {
     // 로그인 API
     @PostMapping("/user/login")
     public ApiResponseDto login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse res) {
-        return userService.login(loginRequestDto, res);
+        try {
+            return userService.login(loginRequestDto, res);
+        } catch (IllegalArgumentException e) {
+            return new ApiResponseDto("ID 혹은 비밀번호 오류입니다.", HttpStatus.BAD_REQUEST.value());
+        }
     }
 }

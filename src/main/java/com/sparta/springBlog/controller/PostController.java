@@ -46,20 +46,28 @@ public class PostController {
 
     // id 로 특정 게시글 수정하기
     @PutMapping("/posts/{id}")
-    public ResponseEntity<PostResponseDto> updatePost(@PathVariable Long id,
-                                                      @RequestBody PostRequestDto postRequestDto,
-                                                      @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        PostResponseDto postResponseDto = postService.updatePost(id, postRequestDto, userDetails.getUser());
-
-        return ResponseEntity.status(HttpStatus.OK).body(postResponseDto);
+    public ResponseEntity<ApiResponseDto> updatePost(@PathVariable Long id,
+                                                     @RequestBody PostRequestDto postRequestDto,
+                                                     @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        try {
+            PostResponseDto postResponseDto = postService.updatePost(id, postRequestDto, userDetails.getUser());
+            return ResponseEntity.status(HttpStatus.OK).body(postResponseDto);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    new ApiResponseDto("작성자만 삭제/수정할 수 있습니다.", HttpStatus.BAD_REQUEST.value()));
+        }
     }
 
     // id로 특정 게시글 삭제하기
     @DeleteMapping("/posts/{id}")
     public ResponseEntity<ApiResponseDto> deletePost(@PathVariable Long id,
                                                      @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        ApiResponseDto apiResponseDto = postService.deletePost(id, userDetails.getUser());
-
-        return ResponseEntity.status(HttpStatus.OK).body(apiResponseDto);
+        try {
+            ApiResponseDto apiResponseDto = postService.deletePost(id, userDetails.getUser());
+            return ResponseEntity.status(HttpStatus.OK).body(apiResponseDto);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    new ApiResponseDto("작성자만 삭제/수정할 수 있습니다.", HttpStatus.BAD_REQUEST.value()));
+        }
     }
 }

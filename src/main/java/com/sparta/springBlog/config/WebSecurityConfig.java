@@ -1,5 +1,6 @@
 package com.sparta.springBlog.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.springBlog.Jwt.JwtAuthorizationFilter;
 import com.sparta.springBlog.Jwt.JwtUtil;
 import com.sparta.springBlog.security.UserDetailsServiceImpl;
@@ -25,6 +26,7 @@ public class WebSecurityConfig {
 
     private final JwtUtil jwtUtil;
     private final UserDetailsServiceImpl userDetailsService;
+    private final ObjectMapper objectMapper;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -38,7 +40,7 @@ public class WebSecurityConfig {
 
     @Bean
     public JwtAuthorizationFilter jwtAuthorizationFilter() {
-        return new JwtAuthorizationFilter(jwtUtil, userDetailsService);
+        return new JwtAuthorizationFilter(jwtUtil, userDetailsService, objectMapper);
     }
 
     @Bean

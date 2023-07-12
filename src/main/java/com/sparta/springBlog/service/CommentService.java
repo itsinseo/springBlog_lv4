@@ -31,7 +31,15 @@ public class CommentService {
 
     @Transactional
     public CommentResponseDto updateComment(Long commentId, CommentRequestDto commentRequestDto, User user) {
-        Comment comment = findCommentForEditing(commentId, user);
+        Comment comment = findComment(commentId);
+
+        // 댓글 작성자 일치 또는 관리자인지 여부 확인
+        if (!(comment.getUser().equals(user)
+                || user.getRole().equals(UserRoleEnum.ADMIN))
+        ) {
+            throw new IllegalArgumentException("댓글의 작성자가 아닙니다. 수정 권한이 없습니다.");
+        }
+
         comment.setCommentContent(commentRequestDto.getCommentContent());
         commentRepository.save(comment);
 
@@ -39,7 +47,15 @@ public class CommentService {
     }
 
     public ApiResponseDto deleteComment(Long commentId, User user) {
-        Comment comment = findCommentForEditing(commentId, user);
+        Comment comment = findComment(commentId);
+
+        // 댓글 작성자 일치 또는 관리자인지 여부 확인
+        if (!(comment.getUser().equals(user)
+                || user.getRole().equals(UserRoleEnum.ADMIN))
+        ) {
+            throw new IllegalArgumentException("댓글의 작성자가 아닙니다. 수정 권한이 없습니다.");
+        }
+
         commentRepository.delete(comment);
 
         return new ApiResponseDto("댓글 삭제 성공", HttpStatus.OK.value());
@@ -51,18 +67,10 @@ public class CommentService {
         );
     }
 
-    public Comment findCommentForEditing(Long commentId, User user) {
+    public Comment findComment (Long commentId) {
         // 댓글 존재 여부 확인
-        Comment comment = commentRepository.findById(commentId).orElseThrow(() ->
+        return commentRepository.findById(commentId).orElseThrow(() ->
                 new NullPointerException("해당 댓글이 존재하지 않습니다.")
         );
-        // 댓글 작성자 일치 또는 관리자인지 여부 확인
-        if (comment.getUser().equals(user)
-                || user.getRole().equals(UserRoleEnum.ADMIN)
-        ) {
-            return comment;
-        } else {
-            throw new IllegalArgumentException("댓글의 작성자가 아닙니다. 수정 권한이 없습니다.");
-        }
     }
 }
