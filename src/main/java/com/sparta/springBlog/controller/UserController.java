@@ -36,7 +36,12 @@ public class UserController {
             return new ApiResponseDto("회원 가입 실패", HttpStatus.BAD_REQUEST.value());
         }
 
-        return userService.signup(signupRequestDto);
+        try {
+            return userService.signup(signupRequestDto);
+        } catch (IllegalArgumentException e) {
+            return new ApiResponseDto("중복된 아이디입니다.", HttpStatus.BAD_REQUEST.value());
+        }
+
     }
 
     // 로그인 API

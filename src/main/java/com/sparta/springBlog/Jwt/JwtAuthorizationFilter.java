@@ -44,14 +44,19 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             }
             Claims info = jwtUtil.getUserInfoFromToken(token);
             setAuthentication(info.getSubject());
-            filterChain.doFilter(request, response);
-        } else {
-            ApiResponseDto responseDto = new ApiResponseDto("토큰이 없습니다.", HttpStatus.BAD_REQUEST.value());
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.setContentType("application/json; charset=UTF-8");
-            response.getWriter().write(objectMapper.writeValueAsString(responseDto));
         }
+        filterChain.doFilter(request, response);
 
+        // signup(회원가입)의 경우 .permitAll()로 통과를 시켜줬는데, 아래 메서드에 걸리는 이유가 뭘까?
+        // .permitAll()의 동작 원리가, 필터를 아예 건너뛰는 게 아니라 거치지만 통과를 시켜주는 것인가?
+//        else {
+//            ApiResponseDto responseDto = new ApiResponseDto("토큰이 없습니다.", HttpStatus.BAD_REQUEST.value());
+//            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+//            response.setContentType("application/json; charset=UTF-8");
+//            response.getWriter().write(objectMapper.writeValueAsString(responseDto));
+//
+//            filterChain.doFilter(request, response);
+//        }
     }
 
     // 인증 처리
