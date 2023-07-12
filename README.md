@@ -70,6 +70,8 @@
 
 ## API 명세서
 
+![lv3api](https://github.com/itsinseo/springBlog_lv3_complete/assets/87530331/753133ee-4270-45ed-aefb-0b9afffe3bbe)
+
 
 ## ERD
 
