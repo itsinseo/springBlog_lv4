@@ -115,11 +115,12 @@
 
 ## API 명세서
 
-![lv4api](https://github.com/itsinseo/springBlog_lv4/assets/87530331/c02c8925-3a1c-4adb-9fdd-fc781daab636)
+![lv4api](https://github.com/itsinseo/springBlog_lv4/assets/87530331/3d06d007-ad8b-4da3-bf96-b0ac0bafe032)
+
 
 ## ERD
 
-![lv4erd](https://github.com/itsinseo/springBlog_lv4/assets/87530331/6561a653-a363-4b62-b70b-58af41f58c04)
+![lv4erd](https://github.com/itsinseo/springBlog_lv4/assets/87530331/9e4cd1c3-410a-4e66-80bf-f08cabea2510)
 
 <aside>
 ❓ **Why: 과제 제출시에는 아래 질문을 고민해보고 답변을 함께 제출해주세요.**
