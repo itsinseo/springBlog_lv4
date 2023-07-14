@@ -5,23 +5,12 @@
 ### 🏁 Goal:  회원가입, 로그인, 댓글 작성/조회/수정/삭제 기능이 추가된 나만의 블로그 백엔드 서버 만들기
 
 <aside>
-# Spring Lv.4
-
-<aside>
-🏁 **Goal:  "Spring Security를 적용한 나만의 항해 블로그 백엔드 서버 만들기"**
+🏁 Goal:  "Spring Security를 적용한 나만의 항해 블로그 백엔드 서버 만들기"
 
 </aside>
 
 <aside>
-✌️ **LV4 **에서 만든 프로젝트에 Spring Security, 좋아요 기능을 추가하고 기존 요구사항의 일부를 변경하세요!
-추가 및 변경된 요구사항은 하이라이트로 표시되었습니다.**
-
-</aside>
-
-</aside>
-
-<aside>
-☝ **추가된 요구사항을 구현해 보세요!**
+✌️ LV3 에서 만든 프로젝트에 Spring Security, 좋아요 기능을 추가하고 기존 요구사항의 일부를 변경하세요!
 
 </aside>
 
@@ -47,7 +36,6 @@
    - password는  `최소 8자 이상, 15자 이하이며 알파벳 대소문자(a~z, A~Z), 숫자(0~9), 특수문자`로 구성되어야 한다.
    - DB에 중복된 username이 없다면 회원을 저장하고 Client 로 성공했다는 메시지, 상태코드 반환하기
    - 회원 권한 부여하기 (ADMIN, USER) - ADMIN 회원은 모든 게시글, 댓글 수정 / 삭제 가능
-
 2. 로그인 API
    - username, password를 Client에서 전달받기
    - DB에서 username을 사용하여 저장된 회원의 유무를 확인하고 있다면 password 비교하기
