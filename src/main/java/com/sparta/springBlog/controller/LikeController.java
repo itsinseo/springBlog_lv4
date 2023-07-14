@@ -19,12 +19,26 @@ public class LikeController {
 
     private final LikeService likeService;
 
-    @PostMapping("/posts/{postId}/like")
-    public ResponseEntity<ApiResponseDto> likeAndDislike(@PathVariable Long postId,
-                                                         @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    @PostMapping("/like/posts/{postId}")
+    public ResponseEntity<ApiResponseDto> postLikeAndCancel(@PathVariable Long postId,
+                                                            @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
         try {
-            ApiResponseDto apiResponseDto = likeService.likeAndDislike(postId, userDetails.getUser());
+            ApiResponseDto apiResponseDto = likeService.postLikeAndCancel(postId, userDetails.getUser());
+            return ResponseEntity.status(HttpStatus.OK).body(apiResponseDto);
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    new ApiResponseDto("게시글이 존재하지 않습니다.", HttpStatus.BAD_REQUEST.value())
+            );
+        }
+    }
+
+    @PostMapping("/like/comments/{commentId}")
+    public ResponseEntity<ApiResponseDto> commentLikeAndCancel(@PathVariable Long commentId,
+                                                               @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+        try {
+            ApiResponseDto apiResponseDto = likeService.commentLikeAndCancel(commentId, userDetails.getUser());
             return ResponseEntity.status(HttpStatus.OK).body(apiResponseDto);
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(

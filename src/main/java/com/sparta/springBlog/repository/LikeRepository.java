@@ -1,5 +1,6 @@
 package com.sparta.springBlog.repository;
 
+import com.sparta.springBlog.entity.Comment;
 import com.sparta.springBlog.entity.Like;
 import com.sparta.springBlog.entity.Post;
 import com.sparta.springBlog.entity.User;
@@ -10,5 +11,6 @@ import java.util.Optional;
 public interface LikeRepository extends JpaRepository<Like, Long> {
 
     Optional<Like> findByPostAndUser(Post post, User user);
+    Optional<Like> findByCommentAndUser(Comment comment, User user);
 
 }

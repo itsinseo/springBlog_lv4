@@ -15,8 +15,12 @@ public class Like {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "post_id", nullable = false)
+    @JoinColumn(name = "post_id")
     private Post post;
+
+    @ManyToOne
+    @JoinColumn(name = "comment_id")
+    private Comment comment;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -24,6 +28,11 @@ public class Like {
 
     public Like(Post post, User user) {
         this.post = post;
+        this.user = user;
+    }
+
+    public Like(Comment comment, User user) {
+        this.comment = comment;
         this.user = user;
     }
 }
