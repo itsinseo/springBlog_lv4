@@ -3,6 +3,7 @@ package com.sparta.springBlog.controller;
 import com.sparta.springBlog.dto.ApiResponseDto;
 import com.sparta.springBlog.dto.PostRequestDto;
 import com.sparta.springBlog.dto.PostResponseDto;
+import com.sparta.springBlog.entity.Post;
 import com.sparta.springBlog.security.UserDetailsImpl;
 import com.sparta.springBlog.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.RejectedExecutionException;
 
 @RestController
 @RequestMapping("/api")
@@ -37,37 +39,37 @@ public class PostController {
     }
 
     // id로 특정 게시글 불러오기
-    @GetMapping("/posts/{id}")
-    public ResponseEntity<PostResponseDto> getPost(@PathVariable Long id) {
-        PostResponseDto postResponseDto = postService.getPost(id);
+    @GetMapping("/posts/{postId}")
+    public ResponseEntity<PostResponseDto> getPost(@PathVariable Long postId) {
+        PostResponseDto postResponseDto = postService.getPost(postId);
 
         return ResponseEntity.status(HttpStatus.OK).body(postResponseDto);
     }
 
     // id 로 특정 게시글 수정하기
-    @PutMapping("/posts/{id}")
-    public ResponseEntity<ApiResponseDto> updatePost(@PathVariable Long id,
-                                                     @RequestBody PostRequestDto postRequestDto,
-                                                     @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    @PutMapping("/posts/{postId}")
+    public ResponseEntity<ApiResponseDto> updatePost(@PathVariable Long postId,
+                                                     @RequestBody PostRequestDto postRequestDto) {
         try {
-            PostResponseDto postResponseDto = postService.updatePost(id, postRequestDto, userDetails.getUser());
+            Post post = postService.findPost(postId);
+            PostResponseDto postResponseDto = postService.updatePost(post, postRequestDto);
             return ResponseEntity.status(HttpStatus.OK).body(postResponseDto);
-        } catch (IllegalArgumentException e) {
+        } catch (RejectedExecutionException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                    new ApiResponseDto("작성자만 삭제/수정할 수 있습니다.", HttpStatus.BAD_REQUEST.value()));
+                    new ApiResponseDto("게시글의 작성자만 삭제/수정할 수 있습니다.", HttpStatus.BAD_REQUEST.value()));
         }
     }
 
     // id로 특정 게시글 삭제하기
-    @DeleteMapping("/posts/{id}")
-    public ResponseEntity<ApiResponseDto> deletePost(@PathVariable Long id,
-                                                     @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    @DeleteMapping("/posts/{postId}")
+    public ResponseEntity<ApiResponseDto> deletePost(@PathVariable Long postId) {
         try {
-            ApiResponseDto apiResponseDto = postService.deletePost(id, userDetails.getUser());
+            Post post = postService.findPost(postId);
+            ApiResponseDto apiResponseDto = postService.deletePost(post);
             return ResponseEntity.status(HttpStatus.OK).body(apiResponseDto);
-        } catch (IllegalArgumentException e) {
+        } catch (RejectedExecutionException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                    new ApiResponseDto("작성자만 삭제/수정할 수 있습니다.", HttpStatus.BAD_REQUEST.value()));
+                    new ApiResponseDto("게시글의 작성자만 삭제/수정할 수 있습니다.", HttpStatus.BAD_REQUEST.value()));
         }
     }
 }

@@ -6,7 +6,6 @@ import com.sparta.springBlog.dto.CommentResponseDto;
 import com.sparta.springBlog.entity.Comment;
 import com.sparta.springBlog.entity.Post;
 import com.sparta.springBlog.entity.User;
-import com.sparta.springBlog.entity.UserRoleEnum;
 import com.sparta.springBlog.repository.CommentRepository;
 import com.sparta.springBlog.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,32 +29,14 @@ public class CommentService {
     }
 
     @Transactional
-    public CommentResponseDto updateComment(Long commentId, CommentRequestDto commentRequestDto, User user) {
-        Comment comment = findComment(commentId);
-
-        // 댓글 작성자 일치 또는 관리자인지 여부 확인
-        if (!(comment.getUser().equals(user)
-                || user.getRole().equals(UserRoleEnum.ADMIN))
-        ) {
-            throw new IllegalArgumentException("댓글의 작성자가 아닙니다. 수정 권한이 없습니다.");
-        }
-
+    public CommentResponseDto updateComment(Comment comment, CommentRequestDto commentRequestDto) {
         comment.setCommentContent(commentRequestDto.getCommentContent());
         commentRepository.save(comment);
 
         return new CommentResponseDto(comment);
     }
 
-    public ApiResponseDto deleteComment(Long commentId, User user) {
-        Comment comment = findComment(commentId);
-
-        // 댓글 작성자 일치 또는 관리자인지 여부 확인
-        if (!(comment.getUser().equals(user)
-                || user.getRole().equals(UserRoleEnum.ADMIN))
-        ) {
-            throw new IllegalArgumentException("댓글의 작성자가 아닙니다. 수정 권한이 없습니다.");
-        }
-
+    public ApiResponseDto deleteComment(Comment comment) {
         commentRepository.delete(comment);
 
         return new ApiResponseDto("댓글 삭제 성공", HttpStatus.OK.value());
@@ -67,7 +48,7 @@ public class CommentService {
         );
     }
 
-    public Comment findComment (Long commentId) {
+    public Comment findComment(Long commentId) {
         // 댓글 존재 여부 확인
         return commentRepository.findById(commentId).orElseThrow(() ->
                 new NullPointerException("해당 댓글이 존재하지 않습니다.")
